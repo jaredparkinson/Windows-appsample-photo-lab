@@ -32,6 +32,7 @@ using Windows.ApplicationModel;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
+using Windows.System;
 using Windows.System.Profile;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
@@ -99,8 +100,6 @@ namespace PhotoLab
 
             // Get the app folder where the images are stored.
             
-
-            StorageFolder faceFolder = await Windows.Storage.StorageFolder.GetFolderFromPathAsync("E:\\OneDrive - Jared Parkinson\\Picture_Project\\Face_Examples");
 
             
             StorageFolder appInstalledFolder = Package.Current.InstalledLocation;
@@ -191,7 +190,7 @@ namespace PhotoLab
 
         private async void AddImages_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-
+            
             FileOpenPicker openPicker = new FileOpenPicker();
             openPicker.ViewMode = PickerViewMode.List;
             openPicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
