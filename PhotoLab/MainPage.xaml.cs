@@ -99,14 +99,26 @@ namespace PhotoLab
             // This code is modified to get images from the app folder.
 
             // Get the app folder where the images are stored.
-            
 
-            
+            StorageFolder stora =  await StorageFolder.GetFolderFromPathAsync("C:\\Users\\jared\\OneDrive\\IFTTT\\reddit\\");
+
+            var fileList2 = await stora.GetFilesAsync();
+
             StorageFolder appInstalledFolder = Package.Current.InstalledLocation;
+
+            foreach (var file in fileList2)
+            {
+                if (file.ContentType == "image/jpeg")
+                {
+                    Images.Add(await LoadImageInfo(file));
+                }
+            }
             StorageFolder assets = await appInstalledFolder.GetFolderAsync("Assets\\Samples");
 
             // Get and process files in folder
             IReadOnlyList<StorageFile> fileList = await assets.GetFilesAsync();
+
+            
             foreach (StorageFile file in fileList)
             {
                 // Limit to only png or jpg files.
