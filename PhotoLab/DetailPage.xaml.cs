@@ -62,7 +62,7 @@ namespace PhotoLab
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            item = e.Parameter as ImageFileInfo;
+            item = (e.Parameter as Image).DataContext as ImageFileInfo;
             canNavigateWithUnsavedChanges = false;
             ResetEffects();
 

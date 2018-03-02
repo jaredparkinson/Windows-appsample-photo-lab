@@ -160,11 +160,12 @@
     </Page.Resources>
 
     <RelativePanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+
         <TextBlock x:Name="TitleTextBlock"
                    Text="Collection"
                    Style="{StaticResource TitleTextBlockStyle}"
                    Margin="24,0,0,24" />
-
         <CommandBar x:Name="MainCommandBar"
                     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
                     RelativePanel.AlignRightWithPanel="True"
@@ -173,12 +174,13 @@
             <AppBarButton Icon="Zoom"
                           Label="Zoom"
                           Flyout="{StaticResource zoomFlyout}" />
+            <AppBarButton Name="AddImages" Icon="Add" Label="Add Images" Click="AddImages_Click" ></AppBarButton>
         </CommandBar>
 
         <GridView x:Name="ImageGridView"
                   animations:ReorderGridAnimation.Duration="400"
                   Margin="0,0,0,8"
-                  ItemClick="ImageGridView_ItemClick"
+
                   IsItemClickEnabled="True"
                   ItemsSource="{x:Bind Images, Mode=OneWay}"
                   RelativePanel.AlignLeftWithPanel="True"
@@ -187,7 +189,7 @@
                   Loaded="{x:Bind StartConnectedAnimationForBackNavigation}"
                   ItemsPanel="{StaticResource ImageGridView_ItemsPanelTemplate}"
                   ItemTemplate="{StaticResource ImageGridView_DefaultItemTemplate}"
-                  ItemContainerStyle="{StaticResource ImageGridView_DefaultItemContainerStyle}">
+                  ItemContainerStyle="{StaticResource ImageGridView_DefaultItemContainerStyle}" DoubleTapped="ImageGridView_DoubleTapped">
         </GridView>
 
         <VisualStateManager.VisualStateGroups>

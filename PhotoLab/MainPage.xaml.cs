@@ -26,9 +26,11 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Storage;
+using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
 using Windows.System.Profile;
 using Windows.UI.Core;
@@ -96,6 +98,11 @@ namespace PhotoLab
             // This code is modified to get images from the app folder.
 
             // Get the app folder where the images are stored.
+            
+
+            StorageFolder faceFolder = await Windows.Storage.StorageFolder.GetFolderFromPathAsync("E:\\OneDrive - Jared Parkinson\\Picture_Project\\Face_Examples");
+
+            
             StorageFolder appInstalledFolder = Package.Current.InstalledLocation;
             StorageFolder assets = await appInstalledFolder.GetFolderAsync("Assets\\Samples");
 
@@ -111,7 +118,7 @@ namespace PhotoLab
             }
         }
 
-       public async static Task<ImageFileInfo> LoadImageInfo(StorageFile file)
+       public static async Task<ImageFileInfo> LoadImageInfo(StorageFile file)
         {
             // Open a stream for the selected file.
             // The 'using' block ensures the stream is disposed
@@ -178,6 +185,50 @@ namespace PhotoLab
             else
             {
                 ItemSize = ZoomSlider.Value;
+            }
+        }
+
+
+        private async void AddImages_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+            FileOpenPicker openPicker = new FileOpenPicker();
+            openPicker.ViewMode = PickerViewMode.List;
+            openPicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
+            openPicker.FileTypeFilter.Add(".jpg");
+            IReadOnlyList<StorageFile> files = await openPicker.PickMultipleFilesAsync();
+
+            if (files.Count > 0)
+            {
+                foreach (var file in files)
+                {
+                    Debug.Write(file.FileType);
+
+                    Images.Add(await LoadImageInfo(file));
+                }
+            }
+        }
+
+        private void ImageGridView_DoubleTapped(object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
+        {
+            // Prepare the connected animation for navigation to the detail page.
+
+            try
+            {
+
+                var image = e.OriginalSource as Image;
+
+
+
+
+                persistedItem = image.DataContext as ImageFileInfo;
+                //ImageGridView.PrepareConnectedAnimation("itemAnimation", image, "ItemImage");
+
+                this.Frame.Navigate(typeof(DetailPage), image);
+            }
+            catch (NullReferenceException)
+            {
+                return;
             }
         }
     }
