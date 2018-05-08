@@ -100,7 +100,7 @@ namespace PhotoLab
 
             // Get the app folder where the images are stored.
 
-            StorageFolder stora =  await StorageFolder.GetFolderFromPathAsync("C:\\Users\\jared\\OneDrive\\IFTTT\\reddit\\");
+            StorageFolder stora =  await StorageFolder.GetFolderFromPathAsync("D:\\picture_project\\emily_kinney");
 
             var fileList2 = await stora.GetFilesAsync();
 
@@ -109,20 +109,6 @@ namespace PhotoLab
             foreach (var file in fileList2)
             {
                 if (file.ContentType == "image/jpeg")
-                {
-                    Images.Add(await LoadImageInfo(file));
-                }
-            }
-            StorageFolder assets = await appInstalledFolder.GetFolderAsync("Assets\\Samples");
-
-            // Get and process files in folder
-            IReadOnlyList<StorageFile> fileList = await assets.GetFilesAsync();
-
-            
-            foreach (StorageFile file in fileList)
-            {
-                // Limit to only png or jpg files.
-                if (file.ContentType == "image/png" || file.ContentType == "image/jpeg")
                 {
                     Images.Add(await LoadImageInfo(file));
                 }
